@@ -110,7 +110,7 @@ const vinicio =  {
     ropa:{
         color:'plomo',
         talla:'40'
-    }
+    },
     mascotas:['cachetes','pequitas','panda']
 
 }; //Object
@@ -118,7 +118,7 @@ vinicio.apellido;//quinga
 
 
 
-const arregloNumeros =[]; object
+const arregloNumeros =[]; //object
 
 console.log(vinicio);
 console.log(arregloNumeros);
