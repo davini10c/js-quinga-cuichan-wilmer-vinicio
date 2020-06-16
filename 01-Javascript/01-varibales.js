@@ -109,16 +109,89 @@ const vinicio =  {
     casado: false,
     ropa:{
         color:'plomo',
-        talla:'40'
+        talla:'40',
     },
     mascotas:['cachetes','pequitas','panda']
 
 }; //Object
+//acceder a las propiedades del objecto
 vinicio.apellido;//quinga
+vinicio["nombre"]="Vinicio";
+vinicio.nombre = "Wilmer";
+vinicio.sueldo; //undefined
+
+console.log(vinicio.sueldo)
+vinicio.sueldo = 1.2
+
+console.log(vinicio.sueldo)
+vinicio["gastos"]= 0.8;
+vinicio.nombre = undefined;
+
+console.log(vinicio)
+//console.log(Object.keys(vinicio))
+console.log(Object.values(vinicio))
+delete vinicio.nombre; // eliminar la llave nombre
+//console.log(vinicio.sueldo)
+//console.log(Object.keys(vinicio))
+console.log(Object.values(vinicio))
+
+//Lista de variables por valos JS
+//number
+//string
+//boolean
+//undefined
+
+let edadVinicio = 31;
+let edadWilmer = edadVinicio
+
+console.log(edadVinicio); //31
+console.log(edadWilmer);//31
+
+edadVinicio = edadVinicio +1;
+
+console.log(edadVinicio); //
+console.log(edadWilmer);//
+
+
+//Variables por referencia  en JS
+let rafael = {
+    nombre: "Rafael"
+};
+
+let lenin = Object.assign(target:{}, rafael);
+console.log(rafael);
+console.log(lenin);
+
+lenin.nombre ="lenin"
+delete rafael.nombre;
+console.log(rafael);
+console.log(lenin);
 
 
 
+
+
+/*let lenin = rafael;
+
+console.log(rafael);
+console.log(lenin);
+lenin.nombre = "lenin";
+console.log(rafael);
+console.log(lenin);
+
+delete rafael.nombre;
+console.log(rafael);
+console.log(lenin);
+
+*/
+
+
+
+
+/*
 const arregloNumeros =[]; //object
 
 console.log(vinicio);
 console.log(arregloNumeros);
+
+*/
