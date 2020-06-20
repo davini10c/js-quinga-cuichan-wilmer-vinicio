@@ -68,7 +68,6 @@ const respuestaFind =  arreglo
         return valorActual.nombre === "Cristian";
     }
 );
-
 //console.log('respuestaFind', respuestaFind) //undefind
 
 
@@ -150,7 +149,7 @@ const respuestaFilter=  arreglo
         }
     );
 
-console.log('respuestaFilter', respuestaFilter)
+//console.log('respuestaFilter', respuestaFilter)
 //console.log('arreglo', arreglo);
 
 
