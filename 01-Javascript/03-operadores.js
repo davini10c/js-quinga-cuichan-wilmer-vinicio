@@ -123,8 +123,8 @@ const respuestaMap=  arreglo
         }
     );
 
-//console.log('respuestaMap', respuestaMap)
-//console.log('arreglo', arreglo);
+console.log('respuestaMap', respuestaMap)
+console.log('arreglo', arreglo);
 
 const respuestaMapNuevo=  arreglo
     //funcion anonima, no tiene nombre
