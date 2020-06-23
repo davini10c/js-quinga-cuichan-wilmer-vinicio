@@ -123,8 +123,8 @@ const respuestaMap=  arreglo
         }
     );
 
-console.log('respuestaMap', respuestaMap)
-console.log('arreglo', arreglo);
+//console.log('respuestaMap', respuestaMap)
+//console.log('arreglo', arreglo);
 
 const respuestaMapNuevo=  arreglo
     //funcion anonima, no tiene nombre
@@ -151,5 +151,86 @@ const respuestaFilter=  arreglo
 
 //console.log('respuestaFilter', respuestaFilter)
 //console.log('arreglo', arreglo);
+
+
+//some devuelve un booleano
+// hay notas menores a nueve si o no
+//and
+const respuestaSome = arreglo
+    .some(
+        (valorActual, indiceActual, arregloCompleto)=>{
+            return valorActual.nota < 4;
+
+        }
+    )
+
+//console.log('respuestaSome',respuestaSome)
+
+
+//every -> expresion
+// devuelve un booleano
+//todas las notas son mayores a 14 si o no
+//and
+
+
+
+const respuestaAny = arreglo
+    .every(
+        (valorActual, indiceActual, arregloCompleto)=>{
+            return valorActual.nota > 14;
+
+        }
+    )
+
+//console.log('respuestaAny',respuestaAny)
+
+//[1,2,3,4,5,6,5,4,3,1]
+//reduce izq -> derecha
+// reduceRight der -> izq
+const  respuestaReduce = arreglo
+    .reduce(
+        (valorAcumulado, valorActual, indice, arreglo)=>{
+            return valorAcumulado + valorActual.nota
+        },
+        0 // acumulado
+    )
+
+//console.log('respuestaReduce',respuestaReduce)
+
+const  respuestaReduce2 = arreglo
+    .reduce(
+        (valorAcumulado, valorActual, indice, arreglo)=>{
+            return valorAcumulado + valorActual.nota
+        },
+        500 // acumulado
+    )
+
+//console.log('respuestaReduce2',respuestaReduce2)
+
+const arregloEstudiantesANueve = arreglo
+    .map((v)=> v.nota * 1.3)
+    .filter( (nota)=>  nota < 9 )
+
+    const totalPuntosEstudiante = arregloEstudiantesANueve
+
+    .reduce((acumulado, actual)=> acumulado +actual,0);
+
+const notaPromedio = totalPuntosEstudiante / arregloEstudiantesANueve.length;
+
+console.log('notaPromedio',notaPromedio)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
