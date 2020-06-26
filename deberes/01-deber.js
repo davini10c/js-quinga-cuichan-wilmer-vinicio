@@ -55,19 +55,20 @@ const  vocales = ["a","e","i","o","u","A","E","I","O","U"];
 const respuestaMap =  arregloClase
     .map(
          (valorActual) =>{
-             const nuevoElemente = {
+
+             const nuevoElemente = { //clona vector
                  id: valorActual.id,
                  nombre: valorActual.nombre,
                  nota: valorActual.nota
 
              };
-             for (let letra of nuevoElemente.nombre){
-                 if (vocales.indexOf(letra) === -1){
+             for (let letra of nuevoElemente.nombre){ // devuelve las letras
+                 if (vocales.indexOf(letra) === -1){ //busca consonantes
                      nuevoElemente.nota =  nuevoElemente.nota + 0.05;
                     // console.log("0.05", letra,  nuevoElemente.nota, nuevoElemente.nombre, vocales.indexOf(letra) );
                  }
                  else
-                 {
+                 { //busca vocales
                      nuevoElemente.nota =  nuevoElemente.nota + 0.1;
                      //console.log("0.1", letra,  nuevoElemente.nota, nuevoElemente.nombre, vocales.indexOf(letra)  );
                  }
@@ -77,7 +78,6 @@ const respuestaMap =  arregloClase
         }
     );
 
-console.log("Notas Originales ", arregloClase);
 console.log("notas Finales", respuestaMap);
 
 const estudiantesAprueban=  respuestaMap
@@ -86,7 +86,6 @@ const estudiantesAprueban=  respuestaMap
             return valorActual.nota >= 14;
         }
     );
-
 console.log("Estudiantes que pasaron la materia ", estudiantesAprueban);
 
 const estudiantesReprueban=  respuestaMap
@@ -97,3 +96,4 @@ const estudiantesReprueban=  respuestaMap
     );
 
 console.log("Estudiantes que no pasaron la materia", estudiantesReprueban);
+console.log("Notas Originales ", arregloClase);
