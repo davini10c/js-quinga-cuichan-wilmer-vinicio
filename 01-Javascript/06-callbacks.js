@@ -18,6 +18,9 @@ fs.readFile( //asincrona
         }
     }
 );
-const suma = 5+3; // sincrona
+
+
+
+/*const suma = 5+3; // sincrona
 console.log('suma', suma); //sincrona
-console.log('Final'); //sincrona
+console.log('Final'); //sincrona*/
