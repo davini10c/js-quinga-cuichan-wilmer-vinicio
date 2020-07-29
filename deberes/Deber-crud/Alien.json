@@ -1,0 +1,13 @@
+{
+  "alien": [
+    {
+      "nombreEspecie": "Arcturianos",
+      "numeroOjos": 2,
+      "colorPiel": "azul",
+      "poseeNavesGalaxticas": true,
+      "idUniverso": 2,
+      "idAlien": 1
+    }
+
+  ]
+}
