@@ -2,8 +2,8 @@
 const fs = require('fs')
 const inquirer = require('inquirer')
 const pathUniverso = './Universo.json'
-const pathAlien = './Alien.json' // DB Ingredientes
-const opcionConstelacion = ["Plato fuerte", "Sopa", "Postre", "Bebida", "Comida rapida"]
+const pathAlien = './Alien.json'
+const opcionConstelacion = ["TAURO", "GÉMINIS ", "VIRGO ", "Triangulum Australe", "Telescopium"]
 const tipoColorPiel = ["blanca", "Negra", "Azul", "Oscura", "Plateada"]
 
 //funciones para leer y escribir en el archivo
@@ -47,7 +47,7 @@ function promesaEscribirArchivo(pathuniversoOAlien, nuevoDato)
                     } else
                         {
                         resolve()
-                        console.log("Dato Guardo")
+                        console.log("Correcto")
                         }
                 });
         }
@@ -214,6 +214,7 @@ async function mostrarMenuUnierso() {
                 ])
                 const iduniversoABorrar = parseInt(universoABorrar["listaUniversos"].split("-")[0])
                 return eliminarUniversoDB(iduniversoABorrar)
+
             case "Volver":
                 return await menuPrincipal()
             default:
@@ -241,18 +242,18 @@ async function mostrarMenuAlien()
         ])
         switch (menuAlien["opcionMenuAlien"]) {
             case "Mostrar Alienes":
+
                 const verAlien = await inquirer.prompt([
                     {
                         type: 'list',
                         name: 'opcionVistaAlien',
-                        message: 'Mostrar Alien.- Seleccione una opción:',
+                        message: 'Mostrar Alien.',
                         choices: ["Ver todos", "Por Universo"]
                     }
                 ])
                 switch (verAlien["opcionVistaAlien"]) {
                     case "Ver todos":
                         await mostrarTodosLosAlienDB()
-                      //  console.log("|______________________________|")
                         return mostrarMenuAlien()
                     case "Por Universo":
                         const universo = await mostrarTodosLosUniersos()
@@ -265,11 +266,11 @@ async function mostrarMenuAlien()
                             }
                         ])
                         await desplegarAlienPorUniverso(alienDeUniverso)
-                      //  console.log("|______________________________|")
                         return mostrarMenuAlien()
                 }
                 break
-            case "Nuevo ingrediente":
+
+            case "Nuevo Alien":
                 const listauniversosActuales = await mostrarTodosLosUniersos()
                 const alienDeluniverso = await inquirer.prompt([
                     {
@@ -399,7 +400,7 @@ async function mostrarMenuAlien()
                 ])
                 const idAlienABorrar = parseInt(alienABorrar["listaAlien"].split("-")[0])
                 return eliminarAlienDB(idAlienABorrar)
-            case "Volver al menu":
+            case "Volver":
                 return await menuPrincipal()
             default:
                 break
@@ -416,7 +417,7 @@ async function mostrarTodosLosUniersos() {
     try {
         const listaUniversos = await promesaLeerArchivo(pathUniverso)
         return listaUniversos["universos"]
-            .map(actual => actual["id"] + "- " + actual["nombreUniverso"]).reverse()
+            .map(actual => actual["id"] + " (Nombre Universo=) "+ actual["nombreUniverso"] +" (Nombre Constelacion=) " + actual["opcionConstelacion"] + " (# Planetas=) "+ actual["numeroPlanetas"] + " (# Soles=) "+ actual["numeroSoloes"] + " (Agujeros Negros=) "+ actual["tieneAgujerosNegros"]).reverse()
     } catch (error) {
         console.log('error', error)
     }
@@ -429,7 +430,7 @@ async function agregaruniversoDB(nuevoUniverso) {
         nuevoUniverso.id = idNuevoUniverso + 1 // crea un nuevo campo 'id'
         listaUniversos["universos"].push(nuevoUniverso)
         await promesaEscribirArchivo(pathUniverso, listaUniversos)
-        await menuPrincipal()
+        await mostrarMenuUnierso()
     } catch (error) {
         console.log('error', error)
     }
@@ -465,12 +466,11 @@ async function editarUniversoDB(idUniverso, campoAEditar, nuevoDatoUniverso) {
         }
         listaUniversosActualizadas["universos"].splice(posicionUniversoActual, 1, universoAEditar)
         await promesaEscribirArchivo(pathUniverso, listaUniversosActualizadas)
-        await menuPrincipal()
+        await mostrarMenuUnierso()
     } catch (error) {
         console.log('error', error)
     }
 }
-
 
 async function buscarUniversoPoridDB(id) {
     try {
@@ -485,19 +485,19 @@ async function buscarUniversoPoridDB(id) {
 
 async function eliminarUniversoDB(idUniverso) {
     try {
-        /* Elimina los ingredientes en cascada, filtrando los no tengan el idComida a borrar */
-     //   const listaAlien = await promesaLeerArchivoDB(pathIngredientes)
-    /*    listaIngredientes["ingredientes"] = listaIngredientes["ingredientes"]
-            .filter(ing => ing["idComida"] !== idComida)
-        await promesaEscribirArchivoDB(pathIngredientes, listaIngredientes)*/
+        //elimina los alien de ese universo
+        const listaAlien = await promesaLeerArchivo(pathAlien)
+        listaAlien["alien"] = listaAlien["alien"]
+            .filter(alien => alien["idUniverso"] !== idUniverso)
+        await promesaEscribirArchivo(pathAlien, listaAlien)
 
-        /* Finalmente elimina la comida */
+
         const listaUniversosActualizadas = await promesaLeerArchivo(pathUniverso)
         const indiceUniverso = listaUniversosActualizadas["universos"]
             .findIndex(universoAEliminar => universoAEliminar["id"] === idUniverso)
         listaUniversosActualizadas["universos"].splice(indiceUniverso, 1)
         await promesaEscribirArchivo(pathUniverso, listaUniversosActualizadas)
-        await menuPrincipal()
+        await mostrarMenuUnierso()
     } catch (error) {
         console.log('error', error)
     }
@@ -505,22 +505,18 @@ async function eliminarUniversoDB(idUniverso) {
 
 //alien
 
-/* Retorna una arreglo de todos los ingredientes disponibles */
 async function mostrarTodosLosAlienDB() {
     try {
-       // console.log("|___ Catálogo ingredientes ____|")
+        console.log("Todos los alienes")
         const listaAlien = await promesaLeerArchivo(pathAlien)
         return listaAlien["alien"]
-            .map(actual => actual["idAlien"] + "- " + actual["nombreEspecie"]).reverse()
+            .map(actual => actual["idAlien"] + " (Nombre Especie=) " + actual["nombreEspecie"]+ " (# Ojos=) " + actual["numeroOjos"]+ " (color de Piel=) " + actual["colorPiel"]+ " (Naves Galaxticas=) " + actual["poseeNavesGalaxticas"]).reverse()
             .forEach(alien => console.log(alien))
     } catch (error) {
         console.log('error', error)
     }
 }
 
-
-
-/* Imprime el arreglo de ingredientes correspondiente a un objeto comida */
 async function desplegarAlienPorUniverso(universoParaAlien) {
     try {
         const listaAlienPorUniverso = await buscarAlienPoruniverso(universoParaAlien)
@@ -530,27 +526,102 @@ async function desplegarAlienPorUniverso(universoParaAlien) {
     }
 }
 
-/* Retorna un arreglo de ingredientes a partir de un objeto "id-nombreIngrediente" */
 async function buscarAlienPoruniverso(universoParaAlien) {
-    /* comidaParaIngrediente viene como 'id-nombre', con split() separamos el id y del nombre*/
     const idUniversoAMostrar = parseInt(universoParaAlien["listaUniverso"].split("-")[0]) // id
-    console.log("Alienes del universo:", universoParaAlien["listaUniverso"].split("-")[1]) // nombre
+    console.log("Alienes del universo:", universoParaAlien["listaUniverso"].split("-")[0]) // nombre
     try {
         const listaAlienes = await promesaLeerArchivo(pathAlien)
         return listaAlienes["alien"]
             .filter(actual => actual["idUniverso"] === idUniversoAMostrar)
-            .map(actualIng => actualIng["idAlien"] + "- " + actualIng["nombreEspecie"]).reverse()
+            .map(actualIng =>  actualIng["idAlien"] + " (Nombre Especie=) " + actualIng["nombreEspecie"]+ " (# Ojos=) " + actualIng["numeroOjos"]+ " (color de Piel=) " + actualIng["colorPiel"]+ " (Naves Galaxticas=) " + actualIng["poseeNavesGalaxticas"]).reverse()
+    } catch (error) {
+        console.log('error', error)
+    }
+}
+
+async function agregarAlienDB(nuevoAlien) {
+    try {
+        const listaAliens = await promesaLeerArchivo(pathAlien)
+
+        const idNuevoAlien= listaAliens["alien"][listaAliens["alien"].length - 1].idAlien
+        nuevoAlien.idAlien = idNuevoAlien + 1 // crea un nuevo campo idAlien
+        listaAliens["alien"].push(nuevoAlien) // agrega el nuevo idAlien
+        await promesaEscribirArchivo(pathAlien, listaAliens)
+        await mostrarMenuAlien()
+    } catch (error) {
+        console.log('error', error)
+    }
+}
+
+async function buscarAlienPorUniverso(universoParaAlien) {
+    const idUniversoAMostrar = parseInt(universoParaAlien["listaUniversos"].split("-")[0]) // id
+    console.log("Ingredientes de:", universoParaAlien["listaUniversos"].split("-")[1]) // nombre
+    try {
+        const listaAliens = await promesaLeerArchivo(pathAlien)
+        return listaAliens["alien"]
+            .filter(actual => actual["idUniverso"] === idUniversoAMostrar)
+            .map(actualAlien => actualAlien["idAlien"] + "- " + actualAlien["nombreEspecie"]).reverse()
+    } catch (error) {
+        console.log('error', error)
+    }
+}
+
+async function editarAlienDB(idAlien, campoAEditar, nuevoDatoAlien) {
+    try {
+        const alienAEditar = await buscarAlienPorIdDB(idAlien)
+        const listaAlienActualizadas = await promesaLeerArchivo(pathAlien)
+        const posicionAlienActual = listaAlienActualizadas["alien"].findIndex(
+           alienActul => alienActul["idAlien"] === idAlien
+        )
+
+        switch (campoAEditar) {
+            case 1:
+                alienAEditar["nombreEspecie"] = nuevoDatoAlien
+                break
+            case 2:
+                alienAEditar["numeroOjos"] = nuevoDatoAlien
+                break
+            case 3:
+                alienAEditar["colorPiel"] = nuevoDatoAlien
+                break
+            case 4:
+                alienAEditar["poseeNavesGalaxticas"] = nuevoDatoAlien
+                break
+            default:
+                break
+        }
+
+        listaAlienActualizadas["alien"].splice(posicionAlienActual, 1, alienAEditar)
+        await promesaEscribirArchivo(pathAlien, listaAlienActualizadas)
+        await mostrarMenuAlien()
     } catch (error) {
         console.log('error', error)
     }
 }
 
 
+async function buscarAlienPorIdDB(idAlien) {
+    try {
+        const listaAlien = await promesaLeerArchivo(pathAlien)
+        return listaAlien["alien"]
+            .find(aliens => aliens["idAlien"] === idAlien)
+    } catch (error) {
+        console.log('error', error)
+    }
+}
 
-
-
-
-
+async function eliminarAlienDB(idAlien) {
+    try {
+        const listaAlienActualizados = await promesaLeerArchivo(pathAlien)
+        const indiceAlien = listaAlienActualizados["alien"]
+            .findIndex(alienAEliminar => alienAEliminar["idAlien"] === idAlien)
+        listaAlienActualizados["alien"].splice(indiceAlien, 1)
+        await promesaEscribirArchivo(pathAlien, listaAlienActualizados)
+        await mostrarMenuAlien()
+    } catch (error) {
+        console.log('error', error)
+    }
+}
 
 async function main() {
     try
