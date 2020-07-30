@@ -1,13 +1,1 @@
-{
-  "alien": [
-    {
-      "nombreEspecie": "Arcturianos",
-      "numeroOjos": 2,
-      "colorPiel": "azul",
-      "poseeNavesGalaxticas": true,
-      "idUniverso": 2,
-      "idAlien": 1
-    }
-
-  ]
-}
+{"alien":[{"nombreEspecie":"Arcturianos","numeroOjos":2,"colorPiel":"azul","poseeNavesGalaxticas":true,"idUniverso":1,"idAlien":1},{"nombreEspecie":"SinOjos","numeroOjos":2,"colorPiel":"Azul","poseeNavesGalaxticas":true,"idUniverso":4,"idAlien":2},{"nombreEspecie":"","numeroOjos":null,"colorPiel":"blanca","poseeNavesGalaxticas":false,"idUniverso":7,"idAlien":3}]}
